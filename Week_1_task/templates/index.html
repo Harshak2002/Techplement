@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote of the Day</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* General body styling */
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Container for all content */
+        .container {
+            background-color: #fff;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Heading style */
+        h1, h2 {
+            color: #4a90e2;
+            margin-bottom: 10px;
+        }
+
+        /* Quote styling */
+        blockquote {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #555;
+            margin: 20px 0;
+            padding: 10px 20px;
+            border-left: 4px solid #4a90e2;
+        }
+        
+        footer {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* Form styling */
+        form {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #4a90e2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        /* List of quotes styling */
+        ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        li {
+            font-size: 1.1em;
+            color: #444;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 3px solid #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quote of the Day</h1>
+        <!-- Display random quote -->
+        {% if quote %}
+            <blockquote>
+                "{{ quote['content'] }}"
+                <footer>— {{ quote['author'] }}</footer>
+            </blockquote>
+        {% else %}
+            <p>Could not fetch a quote at this time.</p>
+        {% endif %}
+
+        <!-- Author search form -->
+        <h2>Search Quotes by Author</h2>
+        <form method="POST" action="/search">
+            <input type="text" name="author" placeholder="Enter author name" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display search results -->
+        {% if search_author %}
+            <h3>Quotes by {{ search_author }}</h3>
+            {% if quotes %}
+                <ul>
+                    {% for quote in quotes %}
+                        <li>"{{ quote['content'] }}"</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No quotes found for {{ search_author }}.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
